@@ -148,17 +148,3 @@
   background: rgba(163,45,45,0.12);
   color: #ef9090;
 }
-@media (max-width: 900px) {
-  .sidebar {
-    position: fixed;
-    left: -260px;
-    top: 0;
-    height: 100vh;
-    z-index: 1000;
-    transition: left 0.3s ease;
-  }
-
-  .sidebar.open {
-    left: 0;
-  }
-}

@@ -44,9 +44,6 @@ export default function Header() {
 
   return (
     <header className="header">
-
-      <button className="menu-btn" onClick={onMenuClick}>☰</button>
-      
       <span className="header-breadcrumb">GoTicket</span>
       <span className="header-sep">/</span>
       <span className="header-page">{pageTitle}</span>

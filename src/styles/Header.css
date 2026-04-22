@@ -82,15 +82,38 @@
 
 .menu-btn {
   display: none;
-  font-size: 20px;
-  background: none;
-  border: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
   margin-right: 12px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
+  flex-shrink: 0;
+ 
+  /* inherits header text color */
+  color: inherit;
 }
-
-@media (max-width: 900px) {
+ 
+.menu-btn:hover {
+  background: rgba(128, 128, 128, 0.12);
+}
+ 
+.menu-btn-bar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: opacity 0.2s;
+}
+ 
+@media (max-width: 768px) {
   .menu-btn {
-    display: block;
+    display: flex;
   }
 }

@@ -1,17 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import SASidebar from "./SASidebar";
 import SAHeader  from "./SAHeader";
+import "../styles/sa-globals.css";
 
 export default function SALayout({ children }) {
-  const [open, setOpen] = useState(false);
-
   return (
     <div className="sa-layout">
-      <SASidebar open={open} setOpen={setOpen} />
-
+      <SASidebar />
       <div className="sa-content">
-        <SAHeader onMenuClick={() => setOpen(!open)} />
-
+        <SAHeader />
         <div className="sa-page-body">
           {children}
         </div>

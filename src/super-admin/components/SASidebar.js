@@ -55,7 +55,7 @@ const SA_NAV = [
   },
 ];
 
-export default function SASidebar({ open }) {
+export default function SASidebar() {
   const location = useLocation();
 
   const handleLogout = () => {
@@ -65,7 +65,7 @@ export default function SASidebar({ open }) {
   };
 
   return (
-    <aside className={`sa-sidebar ${open ? "open" : ""}`}>
+    <aside className="sa-sidebar">
       {/* Logo */}
       <div className="sa-sidebar-logo">
         <div className="sa-sidebar-logo-icon">GT</div>
@@ -80,14 +80,11 @@ export default function SASidebar({ open }) {
         {SA_NAV.map((section) => (
           <React.Fragment key={section.label}>
             <div className="sa-sidebar-section">{section.label}</div>
-
             {section.items.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`sa-sidebar-link ${
-                  location.pathname === item.path ? "active" : ""
-                }`}
+                className={`sa-sidebar-link ${location.pathname === item.path ? "active" : ""}`}
               >
                 <span className="sa-sidebar-bar" />
                 <span className="sa-sidebar-icon">{item.icon}</span>
