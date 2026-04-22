@@ -47,7 +47,7 @@ const NAV_STAFF = [
   }
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ open, setOpen }) {
   const location = useLocation();
   const role     = getRole();
   const isAdmin  = role === "BRANCH_ADMIN";
@@ -60,7 +60,7 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${open ? "open" : ""}`}>
       {/* Logo */}
       <div className="sidebar-logo">
         <div className="sidebar-logo-icon">GT</div>
