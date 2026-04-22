@@ -1,0 +1,231 @@
+/* TripsNew.css — trip card and new trip UI styles */
+
+/* ── Trip cards grid ── */
+.trips-skeleton {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.trips-section { margin-bottom: 28px; }
+
+.trips-section-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 12px;
+}
+
+.trips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+/* ── Trip card ── */
+.trip-card {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-xs);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: box-shadow 0.15s, transform 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+
+.trip-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+
+.trip-card--flexible::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: #6C48E8;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+
+.trip-card--scheduled::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: var(--blue);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+
+.trip-card--inactive {
+  opacity: 0.7;
+}
+
+/* badges row */
+.trip-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+/* route */
+.trip-card-route {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+.trip-city  { color: var(--text-primary); }
+.trip-arrow { color: var(--text-tertiary); font-size: 14px; }
+
+/* time */
+.trip-card-time {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+}
+
+/* fill bar */
+.trip-card-fill { display: flex; flex-direction: column; gap: 6px; }
+
+.trip-fill-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border);
+  overflow: hidden;
+}
+.trip-fill-bar-inner {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease, background 0.3s;
+}
+
+.trip-fill-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.trip-locked-badge {
+  background: var(--amber-light);
+  color: var(--amber);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 20px;
+  margin-left: auto;
+}
+
+/* price */
+.trip-card-price {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* threshold note */
+.trip-threshold-note {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  background: var(--bg-subtle);
+  padding: 5px 10px;
+  border-radius: var(--r-sm);
+}
+
+/* card actions */
+.trip-card-actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Purple pill (for flexible) ── */
+.pill-purple {
+  background: #EEF0FD;
+  color: #3a228f;
+}
+.pill-purple::before { background: #6C48E8; }
+
+/* ── Trip type — radio buttons ── */
+.trip-type-radios {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.trip-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border: 1px solid var(--border-mid);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: border-color 0.13s, background 0.13s;
+  user-select: none;
+}
+
+.trip-radio-label:hover {
+  border-color: var(--green);
+  background: var(--green-light);
+}
+
+.trip-radio-label--active {
+  border-color: var(--green);
+  background: var(--green-light);
+}
+
+/* Hide the native radio, show custom dot */
+.trip-radio-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.trip-radio-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--border-mid);
+  flex-shrink: 0;
+  position: relative;
+  transition: border-color 0.13s;
+}
+
+.trip-radio-label--active .trip-radio-dot {
+  border-color: var(--green);
+}
+
+.trip-radio-label--active .trip-radio-dot::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.trip-radio-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.trip-radio-text strong {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.trip-radio-hint {
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+}

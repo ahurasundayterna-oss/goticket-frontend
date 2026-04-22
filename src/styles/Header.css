@@ -1,0 +1,81 @@
+/* Header.css */
+
+.header {
+  height: var(--header-h);
+  background: var(--bg-white);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+.header-breadcrumb {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.header-sep {
+  color: var(--border-mid);
+  font-size: 14px;
+}
+
+.header-page {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.2px;
+}
+
+.header-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-park-info {
+  text-align: right;
+}
+
+.header-park-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.header-branch-name {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-weight: 400;
+  margin-top: 1px;
+}
+
+.header-avatar {
+  width: 32px; height: 32px;
+  background: var(--green-light);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+  color: var(--green-dim);
+  flex-shrink: 0;
+}
+
+.header-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 2px rgba(29,158,117,0.25);
+  animation: hpulse 2.5s infinite;
+}
+
+@keyframes hpulse {
+  0%,100% { box-shadow: 0 0 0 2px rgba(29,158,117,0.25); }
+  50%      { box-shadow: 0 0 0 5px rgba(29,158,117,0.08); }
+}

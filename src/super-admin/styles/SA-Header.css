@@ -1,0 +1,39 @@
+/* SA-Header.css */
+
+.sa-header {
+  height: var(--sa-header-h);
+  background: var(--sa-bg-white);
+  border-bottom: 1px solid var(--sa-border);
+  display: flex; align-items: center;
+  padding: 0 28px; gap: 10px;
+  position: sticky; top: 0; z-index: 100;
+  flex-shrink: 0;
+}
+.sa-header-crumb { font-size: 12px; color: var(--sa-text-tertiary); font-weight: 500; }
+.sa-header-sep   { color: var(--sa-border-mid); font-size: 14px; }
+.sa-header-page  { font-size: 14px; font-weight: 700; color: var(--sa-text-primary); letter-spacing: -0.2px; }
+
+.sa-header-right {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 14px;
+}
+.sa-header-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--sa-purple);
+  box-shadow: 0 0 0 2px rgba(108,72,232,0.2);
+  animation: saPulse 2.5s infinite;
+}
+@keyframes saPulse {
+  0%,100% { box-shadow: 0 0 0 2px rgba(108,72,232,0.2); }
+  50%      { box-shadow: 0 0 0 5px rgba(108,72,232,0.06); }
+}
+.sa-header-info { text-align: right; }
+.sa-header-name { font-size: 13px; font-weight: 700; color: var(--sa-text-primary); line-height: 1.2; }
+.sa-header-role { font-size: 11px; color: var(--sa-purple); font-weight: 500; margin-top: 1px; }
+.sa-header-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--sa-purple-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+  color: var(--sa-purple-dim); flex-shrink: 0;
+}

@@ -1,0 +1,103 @@
+/* StaffManagement.css */
+
+.staff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.staff-card {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-xs);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: box-shadow 0.15s;
+}
+.staff-card:hover { box-shadow: var(--shadow-sm); }
+.staff-card--suspended { opacity: 0.7; border-style: dashed; }
+
+.staff-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.staff-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; flex-shrink: 0;
+}
+
+.staff-name  { font-size: 14px; font-weight: 700; }
+.staff-email { font-size: 11px; color: var(--text-tertiary); margin-top: 1px; }
+
+/* Routes section */
+.staff-routes {
+  background: var(--bg-subtle);
+  border-radius: var(--r-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-height: 60px;
+}
+
+.staff-routes-label {
+  font-size: 11px; font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.staff-assign-btn {
+  font-size: 11px; font-weight: 600;
+  color: var(--green); background: none; border: none;
+  cursor: pointer; padding: 0;
+  font-family: var(--font);
+}
+.staff-assign-btn:hover { color: var(--green-dark); }
+
+.staff-no-routes {
+  font-size: 11px; color: var(--text-tertiary);
+  font-style: italic;
+}
+
+.staff-route-tag {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 5px 10px;
+  font-size: 12px; font-weight: 500;
+}
+
+.staff-route-remove {
+  background: none; border: none; cursor: pointer;
+  color: var(--text-tertiary); font-size: 14px; line-height: 1;
+  padding: 0 2px;
+  transition: color 0.1s;
+}
+.staff-route-remove:hover { color: var(--red); }
+
+/* Actions */
+.staff-card-actions {
+  display: flex; gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+/* form error */
+.form-error {
+  background: var(--red-light);
+  border: 1px solid #f5c6c6;
+  color: #7a1a1a;
+  padding: 9px 13px;
+  border-radius: var(--r-md);
+  font-size: 13px;
+  margin-bottom: 14px;
+}

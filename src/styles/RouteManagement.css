@@ -1,0 +1,185 @@
+/* RouteManagement.css */
+
+/* ── Warning banner ── */
+.rm-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--amber-light);
+  border: 1px solid #f0d090;
+  color: #7a4f0e;
+  padding: 11px 16px;
+  border-radius: var(--r-md);
+  font-size: 13px;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+/* ── Hint ── */
+.rm-hint {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  margin-bottom: 12px;
+  padding: 0 2px;
+}
+
+/* ── Route row ── */
+.rm-route-row td {
+  transition: background 0.12s;
+}
+.rm-route-row:hover td {
+  background: var(--bg-subtle);
+}
+.rm-route-row--expanded td {
+  background: var(--bg-subtle);
+  border-bottom: none !important;
+}
+
+.rm-expand-icon {
+  color: var(--text-tertiary);
+  font-size: 11px;
+  width: 14px;
+  flex-shrink: 0;
+  transition: color 0.12s;
+}
+.rm-route-row--expanded .rm-expand-icon { color: var(--green); }
+
+.rm-route-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.rm-arrow {
+  color: var(--text-tertiary);
+  font-weight: 400;
+  margin: 0 2px;
+}
+
+/* ── Expanded staff panel ── */
+.rm-expanded-row > td {
+  padding: 0 !important;
+  border-bottom: 2px solid var(--green-light) !important;
+  background: var(--bg-subtle);
+}
+
+.rm-staff-panel {
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.rm-staff-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.rm-staff-panel-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Staff empty state ── */
+.rm-staff-empty {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  line-height: 1.7;
+  padding: 12px 0;
+}
+
+/* ── Staff list ── */
+.rm-staff-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rm-staff-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  transition: box-shadow 0.12s;
+}
+.rm-staff-item:hover {
+  box-shadow: var(--shadow-xs);
+}
+
+.rm-staff-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--green-light);
+  color: var(--green-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+  flex-shrink: 0;
+}
+
+.rm-staff-info { flex: 1; min-width: 0; }
+.rm-staff-name  { font-size: 13.5px; font-weight: 600; }
+.rm-staff-email { font-size: 11px; color: var(--text-tertiary); margin-top: 1px; }
+
+/* ── Remove button ── */
+.rm-remove-btn {
+  background: none;
+  border: 1px solid var(--border-mid);
+  border-radius: var(--r-sm);
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--red);
+  cursor: pointer;
+  font-family: var(--font);
+  transition: background 0.12s, border-color 0.12s;
+  flex-shrink: 0;
+}
+.rm-remove-btn:hover {
+  background: var(--red-light);
+  border-color: var(--red);
+}
+.rm-remove-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Route label in modal ── */
+.rm-route-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--green-light);
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  margin-bottom: 18px;
+  font-weight: 700;
+  font-size: 15px;
+}
+.rm-route-origin { color: var(--green-dim); }
+.rm-route-sep    { color: var(--green); }
+.rm-route-dest   { color: var(--green-dim); }
+
+/* ── No staff message in modal ── */
+.rm-no-staff {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  padding: 8px 0 12px;
+  text-align: center;
+}
+
+/* ── form error (shared) ── */
+.form-error {
+  background: var(--red-light);
+  border: 1px solid #f5c6c6;
+  color: #7a1a1a;
+  padding: 9px 13px;
+  border-radius: var(--r-md);
+  font-size: 13px;
+  margin-bottom: 14px;
+}

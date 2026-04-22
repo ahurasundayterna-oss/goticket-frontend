@@ -1,0 +1,163 @@
+/* SA-Parks.css */
+
+.sa-parks-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+/* filter tabs */
+.sa-filter-tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--sa-bg-subtle);
+  border: 1px solid var(--sa-border);
+  border-radius: var(--sa-r-md);
+  padding: 3px;
+}
+.sa-filter-tab {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--sa-r-sm);
+  border: none; background: none;
+  font-size: 12px; font-weight: 600;
+  color: var(--sa-text-secondary);
+  cursor: pointer;
+  font-family: var(--sa-font);
+  transition: background 0.13s, color 0.13s;
+  white-space: nowrap;
+}
+.sa-filter-tab:hover { color: var(--sa-text-primary); }
+.sa-filter-tab.active {
+  background: var(--sa-bg-white);
+  color: var(--sa-purple);
+  box-shadow: var(--sa-shadow-xs);
+}
+.sa-filter-count {
+  background: var(--sa-border);
+  color: var(--sa-text-secondary);
+  font-size: 10px; font-weight: 700;
+  padding: 1px 5px; border-radius: 8px;
+  font-family: var(--sa-mono);
+  transition: background 0.13s, color 0.13s;
+}
+.sa-filter-tab.active .sa-filter-count {
+  background: var(--sa-purple-light);
+  color: var(--sa-purple-dim);
+}
+
+/* park name cell */
+.sa-park-name { font-weight: 600; font-size: 13.5px; }
+.sa-park-id   { font-size: 11px; color: var(--sa-text-tertiary); font-family: var(--sa-mono); margin-top: 2px; }
+
+/* action group */
+.sa-action-group { display: flex; align-items: center; gap: 6px; }
+
+/* modal sub-label */
+.sa-modal-section-label {
+  font-size: 11px; font-weight: 700;
+  color: var(--sa-text-secondary);
+  text-transform: uppercase; letter-spacing: 0.07em;
+  margin-bottom: 10px;
+}
+
+/* ── Setup warning banner ── */
+.sa-setup-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--sa-amber-light);
+  border: 1px solid #f0d090;
+  color: #7a4f0e;
+  padding: 11px 16px;
+  border-radius: var(--sa-r-md);
+  font-size: 13px;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+/* ── Park warning inline ── */
+.sa-park-warning {
+  font-size: 11px;
+  color: var(--sa-amber);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* ── Post-creation next steps ── */
+.sa-next-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  text-align: left;
+  background: var(--sa-bg-subtle);
+  border: 1px solid var(--sa-border);
+  border-radius: var(--sa-r-lg);
+  overflow: hidden;
+}
+.sa-next-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  background: var(--sa-bg-white);
+  border-bottom: 1px solid var(--sa-border);
+}
+.sa-next-step:last-child { border-bottom: none; }
+.sa-next-step--pending { background: var(--sa-bg-subtle); opacity: 0.75; }
+.sa-next-num {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--sa-green);
+  color: #fff;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.sa-next-num--pending {
+  background: var(--sa-border-mid);
+  color: var(--sa-text-secondary);
+}
+.sa-next-label { font-size: 13px; font-weight: 600; }
+.sa-next-desc  { font-size: 11px; color: var(--sa-text-secondary); margin-top: 1px; }
+.sa-next-arrow {
+  text-align: center;
+  color: var(--sa-text-tertiary);
+  font-size: 12px;
+  padding: 4px 0;
+  background: var(--sa-bg-subtle);
+  border-bottom: 1px solid var(--sa-border);
+}
+
+/* modal sub-label (shared) */
+.sa-modal-section-label {
+  font-size: 11px; font-weight: 700;
+  color: var(--sa-text-secondary);
+  text-transform: uppercase; letter-spacing: 0.07em;
+  margin-bottom: 10px;
+}
+
+/* info note in modal */
+.sa-info-note {
+  background: var(--sa-purple-light);
+  border: 1px solid #d4ccf7;
+  color: var(--sa-purple-dim);
+  padding: 10px 13px;
+  border-radius: var(--sa-r-md);
+  font-size: 12.5px;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+/* form error */
+.sa-form-error {
+  background: var(--sa-red-light);
+  border: 1px solid #f5c6c6;
+  color: #7a1a1a;
+  padding: 9px 13px;
+  border-radius: var(--sa-r-md);
+  font-size: 13px;
+  margin-bottom: 14px;
+}

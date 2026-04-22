@@ -1,0 +1,137 @@
+/* Dashboard.css */
+
+/* hero */
+.dash-hero { margin-bottom: 24px; }
+.dash-eyebrow { font-size: 11px; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 5px; }
+.dash-title { font-size: clamp(18px, 2.2vw, 24px); font-weight: 800; letter-spacing: -0.4px; margin-bottom: 4px; }
+.dash-sub { font-size: 13px; color: var(--text-secondary); }
+
+/* stat cards grid */
+.dash-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.dash-stat {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--shadow-xs);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition: transform 0.18s, box-shadow 0.18s;
+  animation: fadeUp 0.4s ease both;
+}
+.dash-stat:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+.dash-stat::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+.dash-stat--green::after { background: var(--green); }
+.dash-stat--blue::after  { background: var(--blue); }
+.dash-stat--amber::after { background: var(--amber); }
+.dash-stat--teal::after  { background: #0891b2; }
+
+.dash-stat__icon {
+  width: 42px; height: 42px;
+  border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.dash-stat--green .dash-stat__icon { background: var(--green-light); }
+.dash-stat--blue  .dash-stat__icon { background: var(--blue-light); }
+.dash-stat--amber .dash-stat__icon { background: var(--amber-light); }
+.dash-stat--teal  .dash-stat__icon { background: #ecfeff; }
+
+.dash-stat__label {
+  font-size: 11px; font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+.dash-stat__value {
+  font-size: 24px; font-weight: 700;
+  font-family: var(--mono);
+  letter-spacing: -0.8px; line-height: 1;
+}
+
+/* error banner */
+.dash-error-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--red-light);
+  border: 1px solid #f5c6c6;
+  color: #7a1a1a;
+  padding: 11px 16px;
+  border-radius: var(--r-md);
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.dash-error-banner button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  color: inherit;
+  text-decoration: underline;
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 0;
+}
+
+/* bottom grid */
+.dash-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+@media (max-width: 900px) { .dash-bottom-grid { grid-template-columns: 1fr; } }
+
+/* trip item */
+.dash-trip-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+.dash-trip-item:last-child { border-bottom: none; }
+.dash-trip-item:hover { background: var(--bg-subtle); }
+.dash-trip-meta { font-size: 11px; color: var(--text-secondary); margin-top: 2px; font-family: var(--mono); }
+
+/* booking item */
+.dash-booking-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+.dash-booking-item:last-child { border-bottom: none; }
+.dash-booking-item:hover { background: var(--bg-subtle); }
+
+.dash-booking-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+  flex-shrink: 0;
+}
+.dash-booking-name { font-size: 13px; font-weight: 600; }
+.dash-booking-route { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
+.dash-booking-time { font-size: 11px; color: var(--text-tertiary); margin-top: 3px; font-family: var(--mono); }

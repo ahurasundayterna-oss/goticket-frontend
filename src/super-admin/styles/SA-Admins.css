@@ -1,0 +1,64 @@
+/* SA-Admins.css */
+
+/* ── How-it-works flow strip ── */
+.sa-flow-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--sa-purple-light);
+  border: 1px solid #d4ccf7;
+  border-radius: var(--sa-r-lg);
+  padding: 14px 20px;
+  margin-bottom: 18px;
+}
+.sa-flow-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sa-flow-num {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--sa-purple);
+  color: #fff;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.sa-flow-label {
+  font-size: 12px; font-weight: 700;
+  color: var(--sa-purple-dim);
+}
+.sa-flow-desc {
+  font-size: 11px; color: #6a55c4; margin-top: 1px;
+}
+.sa-flow-arrow {
+  font-size: 14px; color: var(--sa-purple-mid);
+  flex-shrink: 0;
+}
+
+/* ── Admin row ── */
+.sa-admin-row {
+  display: flex; 
+  align-items: center; 
+  gap: 10px;
+}
+
+.sa-admin-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0;
+}
+.sa-admin-name  { font-size: 13.5px; font-weight: 600; }
+.sa-admin-email { font-size: 11px; color: var(--sa-text-tertiary); margin-top: 1px; }
+
+/* SA-Form-error shared */
+.sa-form-error {
+  background: var(--sa-red-light);
+  border: 1px solid #f5c6c6;
+  color: #7a1a1a;
+  padding: 9px 13px;
+  border-radius: var(--sa-r-md);
+  font-size: 13px;
+  margin-bottom: 14px;
+}

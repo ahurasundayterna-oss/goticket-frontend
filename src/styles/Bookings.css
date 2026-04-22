@@ -1,0 +1,111 @@
+/* Bookings.css */
+
+.manual-card {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 20px 22px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow-xs);
+}
+
+.manual-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.manual-card-title::before {
+  content: '';
+  width: 3px; height: 15px;
+  background: var(--green);
+  border-radius: 2px;
+  display: block;
+}
+
+/* Row 1: trip · passenger · phone · seat */
+.manual-form-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+/* Row 2: NOK name · NOK phone · [spacer] · Book button */
+.manual-form-grid--nok {
+  grid-template-columns: 2fr 1fr auto;
+  margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+  .manual-form-grid,
+  .manual-form-grid--nok { grid-template-columns: 1fr 1fr; }
+}
+
+/* Required field asterisk */
+.field-required {
+  color: var(--red, #e24b4a);
+  margin-left: 2px;
+  font-size: 12px;
+}
+
+/* ── Trip type info strip ─────────────────────────────────────────────────── */
+.trip-type-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 7px;
+  min-height: 22px;
+}
+
+.trip-type-pill {
+  font-size: 11px;
+  padding: 2px 8px;
+  flex-shrink: 0;
+}
+
+.trip-type-detail {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-family: var(--mono);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.bookings-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px; top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.4; font-size: 14px;
+  pointer-events: none;
+}
+
+.search-input { padding-left: 32px !important; }
+
+/* group header row */
+.booking-group-row td {
+  background: var(--navy);
+  color: #6b8099;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 16px !important;
+  border-bottom: 1px solid var(--navy-border) !important;
+}
+
+.booking-group-route {
+  color: var(--green);
+  font-weight: 700;
+  font-size: 13px;
+}
