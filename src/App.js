@@ -23,6 +23,8 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/login" element={<Login />} />
+
         {/* NOT LOGGED IN */}
         {!token && <Route path="*" element={<Login />} />}
 
