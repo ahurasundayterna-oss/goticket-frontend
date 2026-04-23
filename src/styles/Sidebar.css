@@ -148,3 +148,81 @@
   background: rgba(163,45,45,0.12);
   color: #ef9090;
 }
+/* ── ADD TO BOTTOM OF Sidebar.css ─────────────────────── */
+
+/* Hide desktop sidebar on mobile */
+@media (max-width: 960px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+/* Mobile bottom nav */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: var(--bg-white);
+  border-top: 1px solid var(--border);
+  padding: 6px 0;
+  padding-bottom: calc(6px + env(safe-area-inset-bottom));
+}
+
+@media (max-width: 960px) {
+  .mobile-bottom-nav {
+    display: block;
+  }
+}
+
+.mobile-bottom-nav-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.mobile-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 8px;
+  color: var(--text-tertiary);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: color 0.15s;
+  min-width: 52px;
+}
+
+.mobile-tab.active {
+  color: var(--green);
+}
+
+.mobile-tab-icon {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-tab-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.mobile-tab-label {
+  font-size: 10px;
+  font-weight: 500;
+  font-family: var(--font);
+}
+
+/* Push page content above bottom nav on mobile */
+@media (max-width: 960px) {
+  .page-body {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  }
+}

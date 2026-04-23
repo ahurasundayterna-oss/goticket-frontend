@@ -117,3 +117,39 @@
     display: flex;
   }
 }
+/* ── ADD TO BOTTOM OF Header.css ──────────────────────── */
+
+/* Hide mobile title on desktop */
+.header-mobile-title {
+  display: none;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+@media (max-width: 960px) {
+  /* Show mobile title, hide breadcrumb */
+  .header-mobile-title {
+    display: block;
+  }
+
+  .header-breadcrumbs {
+    display: none;
+  }
+
+  /* Shrink header padding */
+  .header {
+    padding: 0 14px;
+  }
+
+  /* Hide park name text on very small screens */
+  .header-park-info {
+    display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .header-dot {
+    display: none;
+  }
+}

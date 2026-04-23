@@ -1,0 +1,417 @@
+/* ============================================================
+   responsive.css — GoTicket Mobile-First Responsive Layer
+   Import this AFTER globals.css, SuperAdmin.css, etc.
+   ============================================================ */
+
+/* ── BREAKPOINTS USED
+   --mobile:  max-width 640px   (phones)
+   --tablet:  max-width 960px   (tablets, small laptops)
+   --desktop: min-width 961px   (laptops, desktops)
+   ============================================================ */
+
+/* ── 1. BASE: viewport & font scaling ───────────────────── */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-width: 320px;
+}
+
+/* ── 2. TOP NAV ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .topnav {
+    padding: 0 14px;
+    gap: 8px;
+  }
+
+  .topnav-park > div:first-child {
+    display: none; /* hide park name text on small screens */
+  }
+
+  .logo {
+    font-size: 14px;
+  }
+}
+
+/* ── 3. BRANCH ADMIN SIDEBAR → BOTTOM TAB BAR (mobile) ── */
+@media (max-width: 960px) {
+  .app-body {
+    flex-direction: column;
+  }
+
+  /* Hide the traditional left sidebar */
+  .sidebar {
+    display: none;
+  }
+
+  /* Main content takes full width */
+  .main {
+    padding: 16px;
+    width: 100%;
+  }
+
+  /* Bottom nav bar */
+  .mobile-bottom-nav {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 961px) {
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+  .sidebar {
+    display: flex !important;
+  }
+}
+
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: var(--color-background-primary, #fff);
+  border-top: 0.5px solid var(--color-border-tertiary, #e6e4dd);
+  padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
+  height: calc(56px + env(safe-area-inset-bottom));
+}
+
+.mobile-bottom-nav-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.mobile-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--color-text-tertiary, #aaa);
+  font-size: 10px;
+  font-family: var(--font, 'DM Sans', sans-serif);
+  font-weight: 500;
+  border-radius: 8px;
+  transition: color 0.15s;
+  min-width: 52px;
+}
+
+.mobile-tab svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+}
+
+.mobile-tab.active {
+  color: var(--green, #1D9E75);
+}
+
+/* Push main content above the bottom bar on mobile */
+@media (max-width: 960px) {
+  .main,
+  .sa-main {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ── 4. SUPER ADMIN SIDEBAR → DRAWER (mobile/tablet) ───── */
+@media (max-width: 960px) {
+  .sa-layout {
+    flex-direction: column;
+  }
+
+  .sa-sidebar {
+    position: fixed;
+    top: 0;
+    left: -240px;
+    height: 100vh;
+    width: 240px;
+    z-index: 500;
+    transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: none;
+  }
+
+  .sa-sidebar.open {
+    left: 0;
+    box-shadow: 4px 0 32px rgba(0, 0, 0, 0.35);
+  }
+
+  .sa-drawer-overlay {
+    display: block !important;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0);
+    z-index: 499;
+    pointer-events: none;
+    transition: background 0.25s;
+  }
+
+  .sa-drawer-overlay.open {
+    background: rgba(0, 0, 0, 0.45);
+    pointer-events: all;
+  }
+
+  .sa-content {
+    width: 100%;
+  }
+
+  .sa-main {
+    padding: 16px 14px;
+  }
+}
+
+@media (min-width: 961px) {
+  .sa-drawer-overlay { display: none !important; }
+  .sa-sidebar { position: sticky; left: 0; }
+  .sa-mobile-header { display: none !important; }
+}
+
+/* Mobile header for super admin (hamburger) */
+.sa-mobile-header {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #111410;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+@media (max-width: 960px) {
+  .sa-mobile-header {
+    display: flex !important;
+  }
+}
+
+.sa-mobile-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.sa-hamburger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255,255,255,0.7);
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.sa-hamburger:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+/* ── 5. STATS GRIDS ─────────────────────────────────────── */
+@media (max-width: 960px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .sa-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .sa-stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .stat-value,
+  .sa-stat-value {
+    font-size: 18px !important;
+  }
+
+  .stat-card,
+  .sa-stat-card {
+    padding: 14px 12px;
+  }
+}
+
+/* ── 6. PAGE HEADER ─────────────────────────────────────── */
+@media (max-width: 640px) {
+  .page-header {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .page-title {
+    font-size: 17px;
+  }
+
+  .sa-badge-super {
+    align-self: flex-start;
+  }
+}
+
+/* ── 7. BOTTOM GRID (overview 2-col) ─────────────────────── */
+@media (max-width: 768px) {
+  .bottom-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* ── 8. TABLES → HORIZONTAL SCROLL + CARD MODE ──────────── */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* On very small screens, hide less-important columns */
+@media (max-width: 640px) {
+  /* Parks table: hide Trips & Bookings columns */
+  .gtable th:nth-child(5),
+  .gtable td:nth-child(5),
+  .gtable th:nth-child(6),
+  .gtable td:nth-child(6) {
+    display: none;
+  }
+
+  .gtable td, .gtable th {
+    padding: 10px 10px;
+  }
+}
+
+/* SA action buttons: stack on narrow widths */
+@media (max-width: 500px) {
+  .sa-action-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .sa-action-btn {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+}
+
+/* ── 9. SA CARDS (create park/branch/admin) ─────────────── */
+@media (max-width: 640px) {
+  .sa-cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+/* ── 10. FILTER BAR ─────────────────────────────────────── */
+@media (max-width: 640px) {
+  .sa-filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .sa-filter-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+  }
+
+  .sa-filter-tabs .tab {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+/* ── 11. MODALS ─────────────────────────────────────────── */
+@media (max-width: 540px) {
+  .modal {
+    width: calc(100vw - 24px);
+    padding: 20px 18px;
+    border-radius: 16px;
+    margin: 0 12px;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── 12. QUICK LINKS GRID ───────────────────────────────── */
+@media (max-width: 640px) {
+  .sa-quick-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── 13. FORM ROW ───────────────────────────────────────── */
+@media (max-width: 480px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── 14. TOAST ──────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .sa-toast {
+    bottom: calc(72px + env(safe-area-inset-bottom) + 8px);
+    left: 12px;
+    right: 12px;
+    text-align: center;
+  }
+}
+
+/* ── 15. MAIN CONTENT padding when no topnav (SA) ────────── */
+@media (max-width: 960px) {
+  .sa-content {
+    padding-top: 0; /* mobile header handles it */
+  }
+}
+
+/* ── 16. SEARCH BAR ─────────────────────────────────────── */
+@media (max-width: 640px) {
+  .search-bar {
+    padding: 0 14px;
+    flex-wrap: wrap;
+  }
+}
+
+/* ── 17. SCROLLBAR — thinner on mobile ─────────────────── */
+@media (max-width: 960px) {
+  ::-webkit-scrollbar { width: 2px; height: 2px; }
+}
+
+/* ── 18. SAFE AREA (iPhone notch / home bar) ────────────── */
+@supports (padding: max(0px)) {
+  .mobile-bottom-nav {
+    padding-bottom: max(6px, env(safe-area-inset-bottom));
+  }
+
+  .topnav {
+    padding-left: max(14px, env(safe-area-inset-left));
+    padding-right: max(14px, env(safe-area-inset-right));
+  }
+}

@@ -8,11 +8,13 @@ const PAGE_LABELS = {
   "/trips":       "Trips",
   "/bookings":    "Bookings",
   "/routes":      "Routes",
+  "/routes-mgmt": "Routes",
+  "/staff":       "Staff",
   "/settings":    "Settings",
   "/super-admin": "Super Admin",
 };
 
-// Decode JWT without a library — we only need the payload display fields
+// Decode JWT without a library
 function decodeToken(token) {
   try {
     const payload = token.split(".")[1];
@@ -33,7 +35,6 @@ export default function Header() {
     const park   = decoded.parkName   || "GoTicket";
     const branch = decoded.branchName || "Branch";
 
-    // Build initials from park name
     const words = park.split(" ").filter(Boolean);
     const init  = words.length >= 2
       ? words[0][0] + words[1][0]
@@ -44,13 +45,20 @@ export default function Header() {
 
   return (
     <header className="header">
-      <span className="header-breadcrumb">GoTicket</span>
-      <span className="header-sep">/</span>
-      <span className="header-page">{pageTitle}</span>
+      {/* Left: breadcrumb — hidden on mobile to save space */}
+      <div className="header-breadcrumbs">
+        <span className="header-breadcrumb">GoTicket</span>
+        <span className="header-sep">/</span>
+        <span className="header-page">{pageTitle}</span>
+      </div>
+
+      {/* Mobile: just show page title */}
+      <span className="header-mobile-title">{pageTitle}</span>
 
       <div className="header-right">
         <div className="header-dot" title="System online" />
 
+        {/* Park info — hidden on small mobile */}
         <div className="header-park-info">
           <div className="header-park-name">{parkName}</div>
           <div className="header-branch-name">{branchName}</div>

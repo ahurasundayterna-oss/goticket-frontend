@@ -16,11 +16,13 @@ function decodeToken(token) {
   catch { return {}; }
 }
 
-export default function SAHeader({ onMenuClick }) {
+export default function SAHeader() {
   const location = useLocation();
   const title    = PAGE_LABELS[location.pathname] || "Super Admin";
+
   const decoded  = decodeToken(localStorage.getItem("token") || "");
   const name     = decoded.name || "Super Admin";
+
   const initials = name
     .split(" ")
     .map(w => w[0])
@@ -28,10 +30,17 @@ export default function SAHeader({ onMenuClick }) {
     .slice(0, 2)
     .toUpperCase();
 
+  // ✅ JUST ADD THIS (nothing else removed)
+  const onMenuClick = () => {
+    const sidebar = document.querySelector(".sa-sidebar");
+    sidebar?.classList.toggle("open");
+  };
+
   return (
     <header className="sa-header">
       <div className="sa-header-left">
-        {/* ✅ MENU BUTTON (mobile) */}
+
+        {/* MENU BUTTON (mobile) */}
         <button className="sa-menu-btn" onClick={onMenuClick}>
           ☰
         </button>
@@ -48,6 +57,16 @@ export default function SAHeader({ onMenuClick }) {
           <div className="sa-header-name">{name}</div>
           <div className="sa-header-role">Super Administrator</div>
         </div>
+        <button
+  className="sa-header-logout"
+  onClick={() => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    window.location.href = "/login";
+  }}
+>
+  Logout
+</button>
 
         <div className="sa-header-avatar">{initials}</div>
       </div>

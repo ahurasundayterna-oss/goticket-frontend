@@ -37,3 +37,22 @@
   font-size: 11px; font-weight: 700;
   color: var(--sa-purple-dim); flex-shrink: 0;
 }
+.sa-header-logout {
+  display: none;
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.sa-header-logout:hover {
+  color: #ff6b6b;
+}
+
+/* Show ONLY on mobile */
+@media (max-width: 960px) {
+  .sa-header-logout {
+    display: block;
+  }
+}
