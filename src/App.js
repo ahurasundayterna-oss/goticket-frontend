@@ -1,3 +1,4 @@
+import SuspendedScreen from "./components/SuspendedScreen";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -26,6 +27,7 @@ function App() {
         {/* PUBLIC */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/suspended" element={<SuspendedScreen />} />
 
         {/* NOT LOGGED IN */}
         {!token && <Route path="*" element={<LandingPage />} />}

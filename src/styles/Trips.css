@@ -48,3 +48,61 @@
 }
 
 .tab:hover:not(.active) { color: var(--text-primary); }
+/* ─────────────────────────────────────────────────────────────────────────────
+   PASTE AT THE END OF: src/styles/Trips.css
+   Adds styling for the flexible trip creation time + departure time rows.
+   Does not affect any existing scheduled trip styles.
+───────────────────────────────────────────────────────────────────────────── */
+
+/* Container for flexible time info */
+.trip-card-flexible-times {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 8px 0;
+  padding: 8px 10px;
+  background: var(--bg-page, #f5f6fa);
+  border-radius: var(--r-md, 6px);
+  border: 1px solid var(--border, #e5e7eb);
+}
+
+/* Each row: label + value side by side */
+.trip-flex-time-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.trip-flex-time-label {
+  color: var(--text-secondary, #6b7280);
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.trip-flex-time-value {
+  color: var(--text-primary, #111827);
+  font-size: 12px;
+  text-align: right;
+}
+
+/* "Departs when full" — muted pending state */
+.trip-flex-time-value--pending {
+  color: var(--text-tertiary, #9ca3af);
+  font-style: italic;
+}
+
+/* Actual departure time row — highlighted when set */
+.trip-flex-time-row--departure {
+  margin-top: 2px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border, #e5e7eb);
+}
+
+/* Departure time value — green to signal it's been triggered */
+.trip-flex-time-value--departed {
+  color: var(--green, #1D9E75);
+  font-weight: 600;
+}

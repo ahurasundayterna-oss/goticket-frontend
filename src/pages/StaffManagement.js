@@ -169,7 +169,7 @@ function StaffCard({ member, index, routes, onRefresh }) {
   const initials = member.name.split(" ").map(w => w[0]).join("").slice(0,2).toUpperCase();
 
   const suspend = async () => {
-    const action = member.suspended ? "activate" : "suspend";
+   const action = member.suspended ? "unsuspend" : "suspend";
     try {
       await API.patch(`/staff/${member.id}/${action}`);
       await onRefresh();

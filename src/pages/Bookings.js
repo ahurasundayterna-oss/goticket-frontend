@@ -5,24 +5,70 @@ import "../styles/globals.css";
 import "../styles/Trips.css";
 import "../styles/Bookings.css";
 
-// ── Date formatting helpers ─────────────────────────────────────
+// ── WAT (UTC+1) date formatting helpers ────────────────────────
+// All helpers explicitly pass timeZone: "Africa/Lagos" so output
+// is correct regardless of where the browser is running.
 
-// Manual bookings: show today's date only, no time → "Tue, 21 Apr"
+// Manual bookings: today's date in Nigerian time → "Tue, 21 Apr"
 function formatManualDate() {
   return new Date().toLocaleDateString("en-NG", {
-    weekday: "short",
-    day:     "numeric",
-    month:   "short",
+    weekday:  "short",
+    day:      "numeric",
+    month:    "short",
+    timeZone: "Africa/Lagos",   // ← FIXED
   });
 }
 
-// WhatsApp / Online bookings: use trip.departureTime, show date + time → "21 Apr, 19:00"
+// Trip departure time → "21 Apr, 07:00"
 function formatTripDateTime(departureTime) {
   if (!departureTime) return "—";
-  const d = new Date(departureTime);
-  const date = d.toLocaleDateString("en-NG", { day: "numeric", month: "short" });
-  const time = d.toLocaleTimeString("en-NG", { hour: "2-digit", minute: "2-digit", hour12: false });
+  const d    = new Date(departureTime);
+  const date = d.toLocaleDateString("en-NG", {
+    day:      "numeric",
+    month:    "short",
+    timeZone: "Africa/Lagos",   // ← FIXED
+  });
+  const time = d.toLocaleTimeString("en-NG", {
+    hour:     "2-digit",
+    minute:   "2-digit",
+    hour12:   false,
+    timeZone: "Africa/Lagos",   // ← FIXED
+  });
   return `${date}, ${time}`;
+}
+
+// Ticket creation time → "6:00 AM"
+function formatCreatedAt(createdAt) {
+  if (!createdAt) return "—";
+  return new Date(createdAt).toLocaleTimeString("en-NG", {
+    hour:     "numeric",
+    minute:   "2-digit",
+    hour12:   true,
+    timeZone: "Africa/Lagos",   // already correct
+  });
+}
+
+// Group header datetime → "Tue, 21 Apr, 07:00"
+function formatGroupHeader(departureTime) {
+  if (!departureTime) return "—";
+  return new Date(departureTime).toLocaleString("en-NG", {
+    weekday:  "short",
+    day:      "numeric",
+    month:    "short",
+    hour:     "2-digit",
+    minute:   "2-digit",
+    timeZone: "Africa/Lagos",   // ← FIXED
+  });
+}
+
+// Page sub-heading date → "Monday, 21 April"
+function formatPageDate(dateStr) {
+  return new Date(dateStr).toLocaleDateString("en-NG", {
+    weekday:  "long",
+    day:      "numeric",
+    month:    "long",
+    timeZone: "Africa/Lagos",   // ← FIXED
+  });
 }
 
 export default function Bookings() {
@@ -31,16 +77,15 @@ export default function Bookings() {
   const [search,   setSearch]   = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
 
-  const [tripId, setTripId] = useState("");
-  const [name,   setName]   = useState("");
-  const [phone,  setPhone]  = useState("");
-  const [seat,   setSeat]   = useState("");
+  const [tripId,   setTripId]   = useState("");
+  const [name,     setName]     = useState("");
+  const [phone,    setPhone]    = useState("");
+  const [seat,     setSeat]     = useState("");
+  const [nokName,  setNokName]  = useState("");
+  const [nokPhone, setNokPhone] = useState("");
+
   const selectedTrip = trips.find((t) => t.id === tripId) || null;
 
-  const [nokName, setNokName] = useState("");
-const [nokPhone, setNokPhone] = useState("");
-
-  // unchanged logic
   const fetchBookings = async () => {
     try {
       const res = await API.get(`/bookings?date=${selectedDate}`);
@@ -58,30 +103,25 @@ const [nokPhone, setNokPhone] = useState("");
   useEffect(() => { fetchBookings(); fetchTrips(); }, [selectedDate]);
 
   const createManualBooking = async () => {
-  if (!nokName.trim()) { alert("Next of kin name is required"); return; }
-  if (!nokPhone.trim()) { alert("Next of kin phone is required"); return; }
+    if (!nokName.trim())  { alert("Next of kin name is required");  return; }
+    if (!nokPhone.trim()) { alert("Next of kin phone is required"); return; }
 
-  try {
-    await API.post("/bookings/manual", {
-      tripId,
-      passengerName: name,
-      passengerPhone: phone,
-      seatNumber: Number(seat),
-      nextOfKinName: nokName,
-      nextOfKinPhone: nokPhone,
-    });
-
-    setName("");
-    setPhone("");
-    setSeat("");
-    setNokName("");
-    setNokPhone("");
-
-    fetchBookings();
-  } catch (err) {
-    alert(err.response?.data?.message || "Error creating booking");
-  }
-};
+    try {
+      await API.post("/bookings/manual", {
+        tripId,
+        passengerName:  name,
+        passengerPhone: phone,
+        seatNumber:     Number(seat),
+        nextOfKinName:  nokName,
+        nextOfKinPhone: nokPhone,
+      });
+      setName(""); setPhone(""); setSeat("");
+      setNokName(""); setNokPhone("");
+      fetchBookings();
+    } catch (err) {
+      alert(err.response?.data?.message || "Error creating booking");
+    }
+  };
 
   const deleteBooking = async (id) => {
     if (!window.confirm("Remove this booking?")) return;
@@ -119,117 +159,106 @@ const [nokPhone, setNokPhone] = useState("");
       <div className="page-header animate-in">
         <div>
           <h1 className="page-title">Bookings</h1>
-          <p className="page-sub">{bookings.length} booking{bookings.length !== 1 ? "s" : ""} on {new Date(selectedDate).toLocaleDateString("en-NG",{ weekday:"long", day:"numeric", month:"long" })}</p>
+          <p className="page-sub">
+            {bookings.length} booking{bookings.length !== 1 ? "s" : ""} on{" "}
+            {formatPageDate(selectedDate + "T00:00:00")}
+          </p>
         </div>
       </div>
 
-{/* Manual booking */}
-<div className="manual-card animate-in">
-  <div className="manual-card-title">Manual Booking</div>
+      {/* Manual booking */}
+      <div className="manual-card animate-in">
+        <div className="manual-card-title">Manual Booking</div>
 
-  {/* Row 1 */}
-  <div className="manual-form-grid">
+        {/* Row 1 */}
+        <div className="manual-form-grid">
+          <div className="form-group" style={{ margin:0 }}>
+            <label className="form-label">Trip</label>
+            <select className="form-control" value={tripId} onChange={(e) => setTripId(e.target.value)}>
+              <option value="">Select trip</option>
+              {trips.map(t => (
+                <option key={t.id} value={t.id}>
+                  {t.departureCity} → {t.destination} — ₦{t.price?.toLocaleString()}
+                </option>
+              ))}
+            </select>
 
-    <div className="form-group" style={{ margin:0 }}>
-      <label className="form-label">Trip</label>
+            {selectedTrip && (
+              <div className="trip-type-strip">
+                {selectedTrip.tripType === "SCHEDULED" ? (
+                  <>
+                    <span className="pill pill-blue trip-type-pill">Scheduled</span>
+                    <span className="trip-type-detail">
+                      Departs{" "}
+                      {new Date(selectedTrip.departureTime).toLocaleString("en-NG", {
+                        weekday:  "short",
+                        day:      "numeric",
+                        month:    "short",
+                        hour:     "2-digit",
+                        minute:   "2-digit",
+                        timeZone: "Africa/Lagos",   // ← FIXED
+                      })}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="pill pill-green trip-type-pill">Flexible</span>
+                    <span className="trip-type-detail">Departs when full</span>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
 
-      <select
-        className="form-control"
-        value={tripId}
-        onChange={(e) => setTripId(e.target.value)}
-      >
-        <option value="">Select trip</option>
-        {trips.map(t => (
-          <option key={t.id} value={t.id}>
-            {t.departureCity} → {t.destination} — ₦{t.price?.toLocaleString()}
-          </option>
-        ))}
-      </select>
+          <div className="form-group" style={{ margin:0 }}>
+            <label className="form-label">Passenger Name</label>
+            <input className="form-control" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} />
+          </div>
 
-      {selectedTrip && (
-        <div className="trip-type-strip">
-          {selectedTrip.tripType === "SCHEDULED" ? (
-            <>
-              <span className="pill pill-blue trip-type-pill">Scheduled</span>
-              <span className="trip-type-detail">
-                Departs{" "}
-                {new Date(selectedTrip.departureTime).toLocaleString("en-NG", {
-                  weekday: "short",
-                  day: "numeric",
-                  month: "short",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </span>
-            </>
-          ) : (
-            <>
-              <span className="pill pill-green trip-type-pill">Flexible</span>
-              <span className="trip-type-detail">
-                Departs when full
-              </span>
-            </>
-          )}
+          <div className="form-group" style={{ margin:0 }}>
+            <label className="form-label">Phone</label>
+            <input className="form-control" placeholder="080..." value={phone} onChange={(e) => setPhone(e.target.value)} />
+          </div>
+
+          <div className="form-group" style={{ margin:0 }}>
+            <label className="form-label">Seat No.</label>
+            <input className="form-control" placeholder="e.g. 7" value={seat} onChange={(e) => setSeat(e.target.value)} />
+          </div>
         </div>
-      )}
-    </div>
 
-    <div className="form-group" style={{ margin:0 }}>
-      <label className="form-label">Passenger Name</label>
-      <input className="form-control" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} />
-    </div>
+        {/* Row 2 — Next of Kin */}
+        <div className="manual-form-grid manual-form-grid--nok">
+          <div className="form-group" style={{ margin:0 }}>
+            <label className="form-label">
+              Next of Kin Name <span className="field-required">*</span>
+            </label>
+            <input
+              className="form-control"
+              placeholder="Full name"
+              value={nokName}
+              onChange={(e) => setNokName(e.target.value)}
+            />
+          </div>
 
-    <div className="form-group" style={{ margin:0 }}>
-      <label className="form-label">Phone</label>
-      <input className="form-control" placeholder="080..." value={phone} onChange={(e) => setPhone(e.target.value)} />
-    </div>
+          <div className="form-group" style={{ margin:0 }}>
+            <label className="form-label">
+              Next of Kin Phone <span className="field-required">*</span>
+            </label>
+            <input
+              className="form-control"
+              placeholder="080..."
+              value={nokPhone}
+              onChange={(e) => setNokPhone(e.target.value)}
+            />
+          </div>
 
-    <div className="form-group" style={{ margin:0 }}>
-      <label className="form-label">Seat No.</label>
-      <input className="form-control" placeholder="e.g. 7" value={seat} onChange={(e) => setSeat(e.target.value)} />
-    </div>
-  </div>
-
-  {/* Row 2 — Next of Kin */}
-  <div className="manual-form-grid manual-form-grid--nok">
-
-    <div className="form-group" style={{ margin:0 }}>
-      <label className="form-label">
-        Next of Kin Name <span className="field-required">*</span>
-      </label>
-      <input
-        className="form-control"
-        placeholder="Full name"
-        value={nokName}
-        onChange={(e) => setNokName(e.target.value)}
-      />
-    </div>
-
-    <div className="form-group" style={{ margin:0 }}>
-      <label className="form-label">
-        Next of Kin Phone <span className="field-required">*</span>
-      </label>
-      <input
-        className="form-control"
-        placeholder="080..."
-        value={nokPhone}
-        onChange={(e) => setNokPhone(e.target.value)}
-      />
-    </div>
-
-    <div style={{ display:"flex", alignItems:"flex-end" }}>
-      <button
-        className="btn btn-primary"
-        style={{ height:40 }}
-        onClick={createManualBooking}
-      >
-        + Book
-      </button>
-    </div>
-
-  </div>
-</div>
-
+          <div style={{ display:"flex", alignItems:"flex-end" }}>
+            <button className="btn btn-primary" style={{ height:40 }} onClick={createManualBooking}>
+              + Book
+            </button>
+          </div>
+        </div>
+      </div>
 
       {/* Filter bar */}
       <div className="bookings-filter-bar">
@@ -264,10 +293,10 @@ const [nokPhone, setNokPhone] = useState("");
             <th>Phone</th>
             <th>Route</th>
             <th>Seat</th>
-            <th>Reference</th>
+            <th>Created At</th>
             <th>Departure</th>
-            <th>Next of Kin</th>  {/* ← new */}
-            <th>NOK Phone</th>    {/* ← new */}
+            <th>Next of Kin</th>
+            <th>NOK Phone</th>
             <th>Source</th>
             <th>Action</th>
           </tr>
@@ -288,27 +317,26 @@ const [nokPhone, setNokPhone] = useState("");
                     {items[0].trip.departureCity} → {items[0].trip.destination}
                   </span>
                   {" · "}
-                  {new Date(items[0].trip.departureTime).toLocaleString("en-NG",{ weekday:"short", day:"numeric", month:"short", hour:"2-digit", minute:"2-digit" })}
+                  {formatGroupHeader(items[0].trip.departureTime)}
                   {" · "}
                   <strong>{items.length}</strong> passenger{items.length !== 1 ? "s" : ""}
                 </td>
               </tr>
               {items.map((b, idx) => {
                 const col      = AVATAR_COLORS[idx % AVATAR_COLORS.length];
-                const initials = (b.passengerName || "??").split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase();
+                const initials = (b.passengerName || "??").split(" ").map(w => w[0]).join("").slice(0,2).toUpperCase();
                 const isManual = b.bookingSource === "MANUAL";
 
-                // ── Departure cell: conditional per source ──
                 const departureDisplay = isManual
-                  ? formatManualDate()                          // today, no time
-                  : formatTripDateTime(b.trip?.departureTime);  // trip time with hour:min
+                  ? formatManualDate()
+                  : formatTripDateTime(b.trip?.departureTime);
 
                 return (
                   <tr key={b.id}>
                     <td style={{ color:"var(--text-tertiary)", fontFamily:"var(--mono)" }}>{idx + 1}</td>
                     <td>
                       <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-                        <div style={{ width:28,height:28,borderRadius:"50%",background:col.bg,color:col.fg,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,fontWeight:700,flexShrink:0 }}>
+                        <div style={{ width:28, height:28, borderRadius:"50%", background:col.bg, color:col.fg, display:"flex", alignItems:"center", justifyContent:"center", fontSize:10, fontWeight:700, flexShrink:0 }}>
                           {initials}
                         </div>
                         <span style={{ fontWeight:600 }}>{b.passengerName}</span>
@@ -321,23 +349,18 @@ const [nokPhone, setNokPhone] = useState("");
                       </div>
                     </td>
                     <td><span className="pill pill-blue">Seat {b.seatNumber}</span></td>
-                    <td><span className="ref-code">{b.reference}</span></td>
-
-                    {/* ── Departure — conditional rendering ── */}
+                    <td style={{ fontSize:12, color:"var(--text-secondary)", fontFamily:"var(--mono)" }}>
+                      {formatCreatedAt(b.createdAt)}
+                    </td>
                     <td style={{ fontSize:12, color:"var(--text-secondary)", fontFamily:"var(--mono)" }}>
                       {departureDisplay}
                     </td>
-
-                    {/* ── Next of Kin ── */}
                     <td style={{ fontSize:12, color:"var(--text-secondary)" }}>
                       {b.nextOfKinName ?? "—"}
                     </td>
-
-                    {/* ── NOK Phone ── */}
                     <td style={{ fontSize:12, color:"var(--text-secondary)", fontFamily:"var(--mono)" }}>
                       {b.nextOfKinPhone ?? "—"}
                     </td>
-
                     <td>
                       <span className={`pill ${b.bookingSource === "WHATSAPP" ? "pill-green" : "pill-gray"}`}>
                         {b.bookingSource === "WHATSAPP" ? "WhatsApp" : "Manual"}
