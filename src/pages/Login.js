@@ -1,33 +1,36 @@
 import React, { useState } from "react";
-import axios from "axios";
+import API from "../api/api"; // ✅ USE SAME API INSTANCE
 import "../styles/globals.css";
 import "../styles/Login.css";
 
 export default function Login() {
-  const [email,    setEmail]    = useState("");
+  const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
-  const [error,    setError]    = useState("");
-  const [loading,  setLoading]  = useState(false);
+  const [error, setError]       = useState("");
+  const [loading, setLoading]   = useState(false);
 
   const login = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
-    try {
-     const res = await axios.post(
-  `${process.env.REACT_APP_API_URL}/api/auth/login`,
-  { email, password }
-);
 
-      if (!res.data || !res.data.token) {
+    try {
+      const res = await API.post("/auth/login", {
+        email,
+        password,
+      });
+
+      // ✅ Validate response
+      if (!res.data?.token) {
         setError("Invalid email or password");
         return;
       }
 
+      // ✅ Save token properly
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role",  res.data.role);
+      localStorage.setItem("role", res.data.role);
 
-      // Role-based redirect
+      // ✅ Redirect based on role
       if (res.data.role === "SUPER_ADMIN") {
         window.location.href = "/sa/dashboard";
       } else {
@@ -35,7 +38,9 @@ export default function Login() {
       }
 
     } catch (err) {
-      setError("Invalid email or password");
+      setError(
+        err.response?.data?.message || "Invalid email or password"
+      );
     } finally {
       setLoading(false);
     }
@@ -50,16 +55,16 @@ export default function Login() {
           <div className="login-logo-icon">GT</div>
           <div>
             <div className="login-logo-name">GoTicket</div>
-            <div className="login-logo-sub">Nigeria's Digital Transport Platform</div>
+            <div className="login-logo-sub">
+              Nigeria's Digital Transport Platform
+            </div>
           </div>
         </div>
 
         <h2 className="login-heading">Welcome back</h2>
         <p className="login-sub">Sign in to your dashboard</p>
 
-        {error && (
-          <div className="login-error">⚠ {error}</div>
-        )}
+        {error && <div className="login-error">⚠ {error}</div>}
 
         <form onSubmit={login}>
           <div className="form-group">
