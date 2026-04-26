@@ -4,11 +4,11 @@ const API = axios.create({
   baseURL: "https://goticket-api.onrender.com/api",
 });
 
-// ── Request interceptor — attach token ────────────────────────
+// attach token to every request
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
 
-  console.log("TOKEN BEING SENT:", token); // 👈 DEBUG LINE
+  console.log("TOKEN BEFORE REQUEST:", token); // debug
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -17,26 +17,33 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
-// ── Response interceptor ──────────────────────────────────────
+// handle responses
 API.interceptors.response.use(
   (response) => response,
   (error) => {
-    const status = error.response?.status;
-    const data   = error.response?.data;
+    console.error("🔥 API ERROR:", error.response);
 
-    console.log("API ERROR:", status, data); // 👈 DEBUG
+    const status = error.response?.status;
+    const data = error.response?.data;
 
     if (status === 403 && data?.suspended === true) {
-      localStorage.setItem("suspensionReason", data.message || "Account suspended.");
-      localStorage.setItem("suspensionLevel", data.level || "USER");
+      localStorage.setItem(
+        "suspensionReason",
+        data.message || "Account suspended."
+      );
+      localStorage.setItem(
+        "suspensionLevel",
+        data.level || "USER"
+      );
+
       window.location.href = "/suspended";
       return new Promise(() => {});
     }
 
+    // IMPORTANT: temporarily disable forced logout
     if (status === 401) {
-      localStorage.removeItem("token");
-      window.location.href = "/login";
-      return new Promise(() => {});
+      console.error("401 ERROR - TOKEN MAY BE MISSING");
+      return Promise.reject(error);
     }
 
     return Promise.reject(error);

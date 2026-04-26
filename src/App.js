@@ -1,5 +1,5 @@
 import SuspendedScreen from "./components/SuspendedScreen";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import LandingPage from "./pages/LandingPage";
@@ -17,8 +17,21 @@ import SAAdmins from "./super-admin/pages/SAAdmins";
 import SAAnalytics from "./super-admin/pages/SAAnalytics";
 
 function App() {
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
+  const [token, setToken] = useState(undefined); // 👈 important
+  const [role, setRole]   = useState(undefined);
+
+  useEffect(() => {
+    const t = localStorage.getItem("token");
+    const r = localStorage.getItem("role");
+
+    setToken(t);
+    setRole(r);
+  }, []);
+
+  // 🚨 BLOCK RENDER until token is loaded
+  if (token === undefined) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Router>
@@ -43,7 +56,7 @@ function App() {
           </>
         )}
 
-        {/* BRANCH ADMIN */}
+        {/* BRANCH ADMIN / STAFF */}
         {token && role !== "SUPER_ADMIN" && (
           <>
             <Route path="/dashboard" element={<Dashboard />} />

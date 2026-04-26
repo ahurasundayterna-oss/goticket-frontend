@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import API from "../api/api"; // ✅ USE SAME API INSTANCE
 import "../styles/globals.css";
 import "../styles/Login.css";
 
@@ -15,32 +14,39 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await API.post("/auth/login", {
-        email,
-        password,
-      });
+      console.log("🚀 Sending login request...");
 
-      // ✅ Validate response
-      if (!res.data?.token) {
-        setError("Invalid email or password");
-        return;
+      const res = await fetch(
+        "https://goticket-api.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      const data = await res.json();
+
+      console.log("✅ RESPONSE:", data);
+
+      if (!res.ok) {
+        throw new Error(data.message || "Login failed");
       }
 
-      // ✅ Save token properly
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", res.data.role);
+      // ✅ SAVE TOKEN
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.role);
 
-      // ✅ Redirect based on role
-      if (res.data.role === "SUPER_ADMIN") {
-        window.location.href = "/sa/dashboard";
-      } else {
-        window.location.href = "/dashboard";
-      }
+      console.log("✅ TOKEN SAVED:", localStorage.getItem("token"));
+
+      // ✅ REDIRECT
+      window.location.href = "/dashboard";
 
     } catch (err) {
-      setError(
-        err.response?.data?.message || "Invalid email or password"
-      );
+      console.error("❌ LOGIN ERROR:", err);
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -72,7 +78,6 @@ export default function Login() {
             <input
               className="login-input"
               type="email"
-              placeholder="you@park.ng"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -84,7 +89,6 @@ export default function Login() {
             <input
               className="login-input"
               type="password"
-              placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
