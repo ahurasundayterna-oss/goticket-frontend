@@ -183,7 +183,7 @@ export default function SAParks() {
     const { action, park } = confirmData;
     try {
       if (action === "suspend")  await API.patch(`/super/parks/${park.id}/suspend`);
-      if (action === "activate") await API.patch(`/super/parks/${park.id}/unsuspend`);
+      if (action === "activate") await API.patch(`/super/parks/${park.id}/activate`);
       if (action === "delete")   await API.delete(`/super/parks/${park.id}`);
       setConfirmData(null);
       fetchParks();
