@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { login as saveLogin } from "../auth";
 import "../styles/globals.css";
 import "../styles/Login.css";
 
@@ -14,8 +15,6 @@ export default function Login() {
     setLoading(true);
 
     try {
-      console.log("🚀 Sending login request...");
-
       const res = await fetch(
         "https://goticket-api.onrender.com/api/auth/login",
         {
@@ -29,23 +28,22 @@ export default function Login() {
 
       const data = await res.json();
 
-      console.log("✅ RESPONSE:", data);
-
       if (!res.ok) {
         throw new Error(data.message || "Login failed");
       }
 
-      // ✅ SAVE TOKEN
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.role);
+      // ✅ use centralized login
+      saveLogin(data.token, data.role);
 
-      console.log("✅ TOKEN SAVED:", localStorage.getItem("token"));
-
-      // ✅ REDIRECT
-      window.location.href = "/dashboard";
+      // ✅ role-based redirect
+      if (data.role === "SUPER_ADMIN") {
+        window.location.href = "/sa/dashboard";
+      } else {
+        window.location.href = "/dashboard";
+      }
 
     } catch (err) {
-      console.error("❌ LOGIN ERROR:", err);
+      console.error("LOGIN ERROR:", err);
       setError(err.message);
     } finally {
       setLoading(false);

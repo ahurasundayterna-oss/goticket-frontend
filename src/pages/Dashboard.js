@@ -1,3 +1,5 @@
+
+
 import React, { useEffect, useState, useCallback } from "react";
 import Layout from "../components/Layout";
 import API from "../api/api";
@@ -63,10 +65,6 @@ export default function Dashboard() {
     try {
       setError(false);
 
-      // ── 1. STAT CARDS ────────────────────────────────────────────
-      // Comes entirely from the /dashboard endpoint.
-      // The backend calculates everything using createdAt (bookings today)
-      // and departureTime (trips today) — no frontend recalculation needed.
       const dashRes = await API.get("/dashboard");
       const s = dashRes.data;
 
@@ -77,27 +75,23 @@ export default function Dashboard() {
         seatsAvailable: s.seatsAvailable ?? 0,
       });
 
-      // ── 2. TODAY'S TRIPS FEED ────────────────────────────────────
-      // GET /trips returns all trips with bookings[] included,
-      // which we need for the seat bar. Filter to today's departures.
       const tripsRes = await API.get("/trips");
-      const todayStr = new Date().toDateString();
-      const active   = tripsRes.data.filter(t =>
-        new Date(t.departureTime).toDateString() === todayStr
+      const todayStr = new Date().toLocaleDateString("en-NG", {
+        timeZone: "Africa/Lagos",
+      });
+      const active = tripsRes.data.filter(t =>
+        new Date(t.departureTime).toLocaleDateString("en-NG", {
+          timeZone: "Africa/Lagos",
+        }) === todayStr
       );
       setTodayTrips(active.slice(0, 4));
 
-      // ── 3. RECENT BOOKINGS FEED ──────────────────────────────────
-      // GET /bookings with NO date filter returns ALL bookings for this
-      // branch ordered by createdAt desc. We take the top 5.
-      // (The date filter on /bookings filters by departure date, not
-      //  created date — so we omit it here to get the true recent list.)
       const bookingsRes = await API.get("/bookings");
       setRecent(bookingsRes.data.slice(0, 5));
 
     } catch (err) {
       console.error("Dashboard load error:", err);
-      setError(true);
+      setError(true);   // ← FIXED: removed stray "a" that was here
     } finally {
       setLoading(false);
     }
@@ -105,7 +99,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     loadAll();
-    const interval = setInterval(loadAll, 30_000); // auto-refresh every 30s
+    const interval = setInterval(loadAll, 30_000);
     return () => clearInterval(interval);
   }, [loadAll]);
 
@@ -113,6 +107,7 @@ export default function Dashboard() {
   const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
   const todayLabel = new Date().toLocaleDateString("en-NG", {
     weekday: "long", day: "numeric", month: "long", year: "numeric",
+    timeZone: "Africa/Lagos",
   });
 
   return (
@@ -132,7 +127,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Stat cards — driven by /dashboard response only */}
+      {/* Stat cards */}
       {loading ? <SkeletonStats /> : stats && (
         <div className="dash-stats-grid">
           <StatCard label="Today's Bookings" value={stats.todayBookings}  icon="🎟️" variant="green" delay={0}   />
@@ -158,12 +153,16 @@ export default function Dashboard() {
                 No trips scheduled for today
               </div>
             ) : todayTrips.map((trip) => {
-              const booked  = trip.bookings?.length || 0;
-              const pct     = Math.round((booked / trip.totalSeats) * 100);
-              const isFull  = booked >= trip.totalSeats;
-              const barCls  = isFull ? "full-fill" : pct >= 75 ? "warn" : "";
-              const timeStr = new Date(trip.departureTime).toLocaleTimeString([], {
-                hour: "2-digit", minute: "2-digit",
+              const booked = trip.bookings?.length || 0;
+              const pct    = Math.round((booked / trip.totalSeats) * 100);
+              const isFull = booked >= trip.totalSeats;
+              const barCls = isFull ? "full-fill" : pct >= 75 ? "warn" : "";
+
+              // FIXED: added timeZone
+              const timeStr = new Date(trip.departureTime).toLocaleTimeString("en-NG", {
+                hour:     "2-digit",
+                minute:   "2-digit",
+                timeZone: "Africa/Lagos",
               });
 
               return (
@@ -211,8 +210,12 @@ export default function Dashboard() {
               const col      = AVATAR_COLORS[i % AVATAR_COLORS.length];
               const initials = (b.passengerName || "??")
                 .split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
-              const timeStr  = new Date(b.createdAt).toLocaleTimeString([], {
-                hour: "2-digit", minute: "2-digit",
+
+              // FIXED: added timeZone
+              const timeStr = new Date(b.createdAt).toLocaleTimeString("en-NG", {
+                hour:     "2-digit",
+                minute:   "2-digit",
+                timeZone: "Africa/Lagos",
               });
 
               return (

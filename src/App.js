@@ -17,18 +17,26 @@ import SAAdmins from "./super-admin/pages/SAAdmins";
 import SAAnalytics from "./super-admin/pages/SAAnalytics";
 
 function App() {
-  const [token, setToken] = useState(undefined); // 👈 important
-  const [role, setRole]   = useState(undefined);
+  const [token, setToken] = useState(undefined);
+  const [role, setRole] = useState(undefined);
 
   useEffect(() => {
-    const t = localStorage.getItem("token");
-    const r = localStorage.getItem("role");
+    const syncAuth = () => {
+      setToken(localStorage.getItem("token"));
+      setRole(localStorage.getItem("role"));
+    };
 
-    setToken(t);
-    setRole(r);
+    syncAuth();
+
+    // 🔥 listen for login/logout changes
+    window.addEventListener("auth-change", syncAuth);
+
+    return () => {
+      window.removeEventListener("auth-change", syncAuth);
+    };
   }, []);
 
-  // 🚨 BLOCK RENDER until token is loaded
+  // ⏳ wait for auth to load
   if (token === undefined) {
     return <div>Loading...</div>;
   }
