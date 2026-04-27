@@ -2,7 +2,7 @@ import axios from "axios";
 import { logout } from "../auth";
 
 const API = axios.create({
-  baseURL: "https://goticket-api.onrender.com/api"
+  baseURL: "https://goticket-frontend.onrender.com/api",
 });
 
 /* ─────────────────────────────

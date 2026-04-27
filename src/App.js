@@ -7,6 +7,8 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Trips from "./pages/Trips";
 import Bookings from "./pages/Bookings";
+import Reports from "./pages/Reports";
+import SAReports from "./super-admin/pages/SAReports";
 
 import StaffManagement from "./pages/StaffManagement";
 import RouteManagement from "./pages/RouteManagement";
@@ -61,6 +63,7 @@ function App() {
             <Route path="/sa/admins" element={<SAAdmins />} />
             <Route path="/sa/analytics" element={<SAAnalytics />} />
             <Route path="*" element={<SADashboard />} />
+            <Route path="/sa/reports" element={<SAReports />} />
           </>
         )}
 
@@ -73,6 +76,7 @@ function App() {
             <Route path="/staff" element={<StaffManagement />} />
             <Route path="/routes-mgmt" element={<RouteManagement />} />
             <Route path="*" element={<Dashboard />} />
+            <Route path="/reports" element={<Reports />} />
           </>
         )}
 

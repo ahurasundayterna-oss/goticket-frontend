@@ -226,3 +226,177 @@
     padding-bottom: calc(72px + env(safe-area-inset-bottom));
   }
 }
+/* ─────────────────────────────────────────────────────────────────────────────
+   PASTE AT THE END OF: src/styles/Sidebar.css
+   Adds collapsible rail behavior for desktop sidebar.
+   Does not change any existing mobile styles.
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Collapsed state (default on desktop) ── */
+.sidebar--collapsed {
+  width: 56px;
+  transition: width 0.2s ease;
+  overflow: hidden;
+}
+
+.sidebar--expanded {
+  width: 220px;
+  transition: width 0.2s ease;
+}
+
+/* Toggle button */
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: 12px auto 8px;
+  background: transparent;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--text-secondary, #6b7280);
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.sidebar-toggle:hover {
+  background: var(--bg-page, #f5f6fa);
+}
+
+/* Hide label text when collapsed */
+.sidebar--collapsed .sidebar-link-label,
+.sidebar--collapsed .sidebar-role-badge,
+.sidebar--collapsed .sidebar-logo-name,
+.sidebar--collapsed .sidebar-section {
+  display: none;
+}
+
+/* Center icons when collapsed */
+.sidebar--collapsed .sidebar-link {
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.sidebar--collapsed .sidebar-icon {
+  margin: 0;
+}
+
+.sidebar--collapsed .sidebar-logo {
+  justify-content: center;
+}
+
+.sidebar--collapsed .sidebar-logout {
+  justify-content: center;
+  padding: 10px 0;
+  width: 100%;
+}
+
+/* Tooltip on hover when collapsed */
+.sidebar--collapsed .sidebar-link[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  left: 60px;
+  background: var(--text-primary, #111827);
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 999;
+  pointer-events: none;
+}
+
+.sidebar--collapsed .sidebar-link {
+  position: relative;
+}
+
+/* ── SA Sidebar same styles under sa- prefix ── */
+.sa-sidebar--collapsed {
+  width: 56px;
+  transition: width 0.2s ease;
+  overflow: hidden;
+}
+
+.sa-sidebar--expanded {
+  width: 220px;
+  transition: width 0.2s ease;
+}
+
+.sa-sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: 12px auto 8px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  cursor: pointer;
+  color: rgba(255,255,255,0.6);
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.sa-sidebar-toggle:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.sa-sidebar--collapsed .sa-sidebar-link-label,
+.sa-sidebar--collapsed .sa-sidebar-logo-badge,
+.sa-sidebar--collapsed .sa-sidebar-logo-name,
+.sa-sidebar--collapsed .sa-sidebar-section {
+  display: none;
+}
+
+.sa-sidebar--collapsed .sa-sidebar-link {
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.sa-sidebar--collapsed .sa-sidebar-icon {
+  margin: 0;
+}
+
+.sa-sidebar--collapsed .sa-sidebar-logo {
+  justify-content: center;
+}
+
+.sa-sidebar--collapsed .sa-sidebar-logout {
+  justify-content: center;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.sa-sidebar--collapsed .sa-sidebar-link {
+  position: relative;
+}
+
+.sa-sidebar--collapsed .sa-sidebar-link[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  left: 60px;
+  background: #1e293b;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 999;
+  pointer-events: none;
+}
+
+/* ── Adjust content area width when sidebar is collapsed ── */
+@media (min-width: 769px) {
+  .layout:has(.sidebar--collapsed) .content {
+    margin-left: 56px;
+    transition: margin-left 0.2s ease;
+  }
+
+  .layout:has(.sidebar--expanded) .content {
+    margin-left: 220px;
+    transition: margin-left 0.2s ease;
+  }
+}
