@@ -135,3 +135,218 @@
 .dash-booking-name { font-size: 13px; font-weight: 600; }
 .dash-booking-route { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
 .dash-booking-time { font-size: 11px; color: var(--text-tertiary); margin-top: 3px; font-family: var(--mono); }
+/* ─────────────────────────────────────────────────────────────────────────────
+   PASTE AT THE END OF: src/styles/Dashboard.css
+   Adds styles for: filter bar, 5-col stat grid, charts, top routes, donut legend
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Hero layout with filter bar on the right ── */
+.dash-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+/* ── Filter bar ── */
+.dash-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  background: var(--bg-white, #fff);
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: var(--r-lg, 10px);
+  padding: 10px 14px;
+  box-shadow: var(--shadow-xs);
+}
+
+.dash-filter-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary, #6b7280);
+  white-space: nowrap;
+}
+
+.dash-filter-select,
+.dash-filter-date {
+  font-size: 13px;
+  padding: 6px 10px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: var(--r-md, 7px);
+  background: var(--bg-page, #f5f6fa);
+  color: var(--text-primary, #111827);
+  cursor: pointer;
+}
+
+.dash-filter-btn {
+  height: 34px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* ── 5-column stat grid ── */
+.dash-stats-grid--5 {
+  grid-template-columns: repeat(5, 1fr) !important;
+}
+
+@media (max-width: 1100px) {
+  .dash-stats-grid--5 { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (max-width: 700px) {
+  .dash-stats-grid--5 { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* Stat change indicator */
+.dash-stat__change {
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+.dash-stat__change.up   { color: #1D9E75; }
+.dash-stat__change.down { color: #e24b4a; }
+
+/* Purple stat variant */
+.dash-stat--purple {
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+  border-left: 3px solid #a855f7;
+}
+
+/* ── Charts row (line chart + payment donut side by side) ── */
+.dash-charts-row {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 900px) {
+  .dash-charts-row { grid-template-columns: 1fr; }
+}
+
+.dash-chart-card {
+  background: var(--bg-white, #fff);
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: var(--r-lg, 10px);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-xs);
+}
+
+.dash-chart-card--sm {
+  padding: 18px 16px;
+}
+
+/* ── Donut chart ── */
+.dash-donut-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dash-donut-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.dash-donut-total {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary, #111827);
+  line-height: 1.2;
+}
+
+.dash-donut-label {
+  font-size: 10px;
+  color: var(--text-tertiary, #9ca3af);
+  margin-top: 2px;
+}
+
+.dash-donut-legend {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.dash-donut-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.dash-donut-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dash-donut-legend-name {
+  flex: 1;
+  color: var(--text-secondary, #6b7280);
+}
+
+.dash-donut-legend-pct {
+  font-weight: 600;
+  color: var(--text-primary, #111827);
+  font-family: var(--mono, monospace);
+  font-size: 11px;
+}
+
+/* ── Top routes ── */
+.dash-route-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border, #e5e7eb);
+}
+
+.dash-route-item:last-child { border-bottom: none; }
+
+.dash-route-name {
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 140px;
+  color: var(--text-primary, #111827);
+}
+
+.dash-route-bar-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dash-route-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--border, #e5e7eb);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.dash-route-bar-fill {
+  height: 100%;
+  background: #6366f1;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.dash-route-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary, #111827);
+  font-family: var(--mono, monospace);
+  min-width: 24px;
+  text-align: right;
+}
