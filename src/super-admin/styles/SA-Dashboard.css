@@ -90,3 +90,376 @@
   text-decoration: underline;
   font-family: var(--sa-font); font-size: 13px; padding: 0;
 }
+/* ─────────────────────────────────────────────────────────────
+   ENHANCED DASHBOARD UI (Glass + Depth + Smooth UX)
+───────────────────────────────────────────────────────────── */
+
+/* ── Hero ── */
+.sa-dash-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+/* ── Filter bar (glass effect) ── */
+.sa-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 12px;
+  padding: 10px 16px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.sa-filter-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--sa-text-secondary, #94a3b8);
+}
+
+/* Inputs */
+.sa-filter-select,
+.sa-filter-date {
+  font-size: 13px;
+  padding: 7px 12px;
+
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--sa-text-primary, #f1f5f9);
+
+  transition: all 0.2s ease;
+}
+
+.sa-filter-select:hover,
+.sa-filter-date:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sa-filter-select:focus,
+.sa-filter-date:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+}
+
+/* Button */
+.sa-filter-btn {
+  height: 34px;
+  font-size: 13px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  border: none;
+  color: white;
+
+  transition: all 0.2s ease;
+}
+
+.sa-filter-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(99, 102, 241, 0.35);
+}
+
+/* ── Stats Grid ── */
+.sa-stats-grid--7 {
+  grid-template-columns: repeat(7, 1fr) !important;
+}
+
+@media (max-width: 1200px) {
+  .sa-stats-grid--7 { grid-template-columns: repeat(4, 1fr) !important; }
+}
+@media (max-width: 800px) {
+  .sa-stats-grid--7 { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* Stat cards (enhanced) */
+.sa-stat {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  padding: 14px;
+  transition: all 0.25s ease;
+}
+
+.sa-stat:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Change indicator */
+.sa-stat__change {
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+.sa-stat__change.up {
+  color: #10b981;
+}
+.sa-stat__change.down {
+  color: #f87171;
+}
+
+/* Variants */
+.sa-stat--indigo {
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.15),
+    rgba(99, 102, 241, 0.05)
+  );
+  border-left: 3px solid #6366f1;
+}
+
+.sa-stat--gray {
+  background: rgba(148, 163, 184, 0.08);
+  border-left: 3px solid #94a3b8;
+}
+
+/* ── Charts Row ── */
+.sa-charts-row {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+@media (max-width: 960px) {
+  .sa-charts-row { grid-template-columns: 1fr; }
+}
+
+/* Chart cards */
+.sa-chart-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(14px);
+
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  padding: 20px;
+
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+}
+
+.sa-chart-card--sm {
+  padding: 18px;
+}
+
+/* ── Donut ── */
+.sa-donut-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sa-donut-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  text-align: center;
+}
+
+.sa-donut-total {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--sa-text-primary, #f1f5f9);
+}
+
+.sa-donut-sublabel {
+  font-size: 11px;
+  color: var(--sa-text-tertiary, #64748b);
+}
+
+/* Legend */
+.sa-donut-legend {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sa-donut-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.sa-donut-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.sa-donut-name {
+  flex: 1;
+  color: var(--sa-text-secondary, #94a3b8);
+}
+
+.sa-donut-pct {
+  font-weight: 600;
+  font-size: 11px;
+  font-family: monospace;
+}
+
+/* ── Bottom grid ── */
+.sa-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+@media (max-width: 768px) {
+  .sa-bottom-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Top parks ── */
+.sa-route-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sa-route-name {
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 130px;
+}
+
+/* Bar */
+.sa-route-bar {
+  flex: 1;
+  height: 7px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.sa-route-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+
+  transition: width 0.6s ease;
+}
+
+.sa-route-count {
+  font-size: 12px;
+  font-weight: 700;
+  font-family: monospace;
+  min-width: 28px;
+  text-align: right;
+}
+/* ───────── UI UPGRADE PATCH (PASTE AT END) ───────── */
+
+/* Stronger card look */
+.sa-chart-card,
+.sa-stat,
+.sa-filter-bar {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+/* Stats hover effect */
+.sa-stat {
+  padding: 16px !important;
+  transition: all 0.2s ease;
+}
+
+.sa-stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* Stat text hierarchy */
+.sa-stat__label {
+  font-size: 11px;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.sa-stat__value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Filter bar improvement */
+.sa-filter-bar {
+  padding: 10px 14px !important;
+}
+
+/* Filter inputs */
+.sa-filter-select,
+.sa-filter-date {
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  padding: 6px 10px;
+}
+
+.sa-filter-select:focus,
+.sa-filter-date:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* Filter button */
+.sa-filter-btn {
+  background: #2563eb !important;
+  color: white !important;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-weight: 500;
+  border: none;
+}
+
+.sa-filter-btn:hover {
+  background: #1d4ed8 !important;
+}
+
+/* Chart spacing */
+.sa-charts-row {
+  margin-top: 20px;
+}
+
+/* Chart title (if you add class in JSX) */
+.sa-chart-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+/* Top parks bar upgrade */
+.sa-route-bar {
+  height: 8px;
+  border-radius: 6px;
+  background: #e2e8f0;
+}
+
+.sa-route-bar-fill {
+  background: linear-gradient(90deg, #2563eb, #4f46e5);
+}
