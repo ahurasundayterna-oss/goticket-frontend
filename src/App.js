@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Trips from "./pages/Trips";
 import Bookings from "./pages/Bookings";
 import Reports from "./pages/Reports";
+import Payments from "./pages/Payments";
 import SAReports from "./super-admin/pages/SAReports";
 
 import StaffManagement from "./pages/StaffManagement";
@@ -77,6 +78,7 @@ function App() {
             <Route path="/routes-mgmt" element={<RouteManagement />} />
             <Route path="*" element={<Dashboard />} />
             <Route path="/reports" element={<Reports />} />
+            <Route path="/payments" element={<Payments />} />
           </>
         )}
 

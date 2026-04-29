@@ -39,6 +39,14 @@ const NAV_BRANCH_ADMIN = [
         </svg>,
       },
       {
+        name: "Payments", path: "/payments",
+        icon: <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <rect x="1" y="4" width="14" height="10" rx="1.5"/>
+          <path d="M1 7h14"/>
+          <path d="M4 11h2M9 11h3"/>
+        </svg>,
+      },
+      {
         name: "Reports", path: "/reports",
         icon: <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
           <rect x="2" y="1" width="12" height="14" rx="1.5"/>
@@ -111,13 +119,12 @@ function getBottomNavItems(nav) {
 }
 
 export default function Sidebar() {
-  const location  = useLocation();
-  const role      = getRole();
-  const isAdmin   = role === "BRANCH_ADMIN";
-  const NAV       = isAdmin ? NAV_BRANCH_ADMIN : NAV_STAFF;
+  const location    = useLocation();
+  const role        = getRole();
+  const isAdmin     = role === "BRANCH_ADMIN";
+  const NAV         = isAdmin ? NAV_BRANCH_ADMIN : NAV_STAFF;
   const bottomItems = getBottomNavItems(NAV);
 
-  // ── Collapsible state — collapsed by default on desktop ──────────────────
   const [expanded, setExpanded] = useState(false);
 
   const handleLogout = () => {
@@ -128,10 +135,10 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* ── Desktop sidebar ─────────────────────────────────────────────── */}
+      {/* ── Desktop sidebar ────────────────────────────────────── */}
       <aside className={`sidebar ${expanded ? "sidebar--expanded" : "sidebar--collapsed"}`}>
 
-        {/* Toggle button */}
+        {/* Toggle */}
         <button
           className="sidebar-toggle"
           onClick={() => setExpanded(prev => !prev)}
@@ -139,13 +146,13 @@ export default function Sidebar() {
         >
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" width="16" height="16">
             {expanded
-              ? <path d="M10 3L6 8l4 5"/>      // chevron left
-              : <path d="M6 3l4 5-4 5"/>        // chevron right
+              ? <path d="M10 3L6 8l4 5"/>
+              : <path d="M6 3l4 5-4 5"/>
             }
           </svg>
         </button>
 
-        {/* Logo — full when expanded, icon-only when collapsed */}
+        {/* Logo */}
         <div className="sidebar-logo">
           <div className="sidebar-logo-icon">GT</div>
           {expanded && (
@@ -192,7 +199,7 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      {/* ── Mobile bottom nav ────────────────────────────────────────────── */}
+      {/* ── Mobile bottom nav ──────────────────────────────────── */}
       <nav className="mobile-bottom-nav">
         <div className="mobile-bottom-nav-inner">
           {bottomItems.map((item) => (
