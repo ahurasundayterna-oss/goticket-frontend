@@ -1,0 +1,437 @@
+/* ══════════════════════════════════════
+   PAYMENTS PAGE — GoTicket
+══════════════════════════════════════ */
+
+/* ── Page Header ── */
+.payments-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ── Error Banner ── */
+.payments-error-banner {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  color: #991b1b;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+/* ══════════════════════════════════════
+   WALLET CARDS GRID
+══════════════════════════════════════ */
+.wallet-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+/* ── Base wallet card ── */
+.wallet-card {
+  border-radius: 16px;
+  padding: 24px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Balance card (green gradient) ── */
+.wallet-card--balance {
+  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  border: none;
+  color: #fff;
+}
+
+.wallet-card__eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+}
+
+.wallet-card--balance .wallet-card__eyebrow {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.wallet-card__value {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.wallet-card--balance .wallet-card__value {
+  color: #fff;
+}
+
+.wallet-card__value--danger {
+  color: #ef4444;
+}
+
+.wallet-card__sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.wallet-card--balance .wallet-card__sub {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Low-balance warning chip inside balance card */
+.wallet-card__low-alert {
+  margin-top: 14px;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: var(--r-md);
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  display: inline-block;
+}
+
+/* Decorative circle on balance card */
+.wallet-card__deco {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  right: -22px;
+  top: -22px;
+  pointer-events: none;
+}
+
+.wallet-card__deco-2 {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  right: 40px;
+  bottom: -30px;
+  pointer-events: none;
+}
+
+/* ── Status pill inside status card ── */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.status-pill--active   { background: #dcfce7; color: #166534; }
+.status-pill--low      { background: #fef3c7; color: #92400e; }
+.status-pill--exhausted{ background: #fee2e2; color: #991b1b; }
+
+.wallet-card__status-text {
+  font-size: 12px;
+  margin: 0;
+}
+
+.wallet-card__status-text--active    { color: var(--text-secondary); }
+.wallet-card__status-text--low       { color: #92400e; }
+.wallet-card__status-text--exhausted { color: #ef4444; }
+
+/* ══════════════════════════════════════
+   TRANSACTION HISTORY
+══════════════════════════════════════ */
+.tx-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.tx-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.tx-filters {
+  display: flex;
+  gap: 8px;
+}
+
+.tx-filter-btn {
+  padding: 6px 14px;
+  border-radius: var(--r-md);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid var(--border);
+  background: var(--bg-white);
+  color: var(--text-secondary);
+  font-family: var(--font);
+}
+
+.tx-filter-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+}
+
+.tx-filter-btn--active {
+  border-color: var(--green);
+  background: var(--green-light);
+  color: var(--green);
+}
+
+/* ── Table cell helpers ── */
+.tx-date {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-family: var(--mono);
+}
+
+.tx-description {
+  font-size: 13px;
+  color: var(--text-primary);
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tx-type-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tx-type-pill--credit { background: #dcfce7; color: #166534; }
+.tx-type-pill--debit  { background: #fee2e2; color: #991b1b; }
+
+.tx-amount {
+  font-family: var(--mono);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tx-amount--credit { color: var(--green); }
+.tx-amount--debit  { color: #ef4444; }
+
+.tx-status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.tx-status-pill--success { background: #dcfce7; color: #166534; }
+.tx-status-pill--pending { background: #fef3c7; color: #92400e; }
+.tx-status-pill--failed  { background: #fee2e2; color: #991b1b; }
+
+.tx-reference {
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--text-tertiary);
+}
+
+/* ── Pagination ── */
+.tx-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.tx-pagination__actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ── Loading cell ── */
+.tx-loading-cell {
+  padding: 40px;
+  text-align: center;
+  color: var(--text-tertiary);
+  font-size: 13px;
+}
+
+/* ══════════════════════════════════════
+   FUND WALLET MODAL
+══════════════════════════════════════ */
+
+/* ── Bank transfer card ── */
+.fund-transfer-card {
+  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  border-radius: 12px;
+  padding: 20px;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.fund-transfer-card__label {
+  font-size: 11px;
+  opacity: 0.8;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.fund-transfer-card__bank {
+  font-size: 14px;
+  margin: 0 0 4px;
+  opacity: 0.9;
+}
+
+.fund-transfer-card__account-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0 14px;
+}
+
+.fund-transfer-card__account-number {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  font-family: var(--mono);
+}
+
+.fund-transfer-card__copy-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: var(--r-sm);
+  padding: 4px 10px;
+  color: #fff;
+  font-size: 11px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.15s;
+  font-family: var(--font);
+}
+
+.fund-transfer-card__copy-btn:hover {
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.fund-transfer-card__amount-row {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fund-transfer-card__amount-label {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.fund-transfer-card__amount-value {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+/* ── Warning box ── */
+.fund-warning {
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #7a5800;
+  line-height: 1.6;
+}
+
+/* ── Reference line ── */
+.fund-reference {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.fund-reference__code {
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ── Amount input helper text ── */
+.fund-helper-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+/* ── Quick amount chips ── */
+.fund-quick-amounts {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.fund-quick-btn {
+  padding: 6px 14px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--font);
+}
+
+.fund-quick-btn:hover {
+  border-color: var(--green);
+  background: var(--green-light);
+  color: var(--green);
+}
+
+.fund-quick-btn--active {
+  border-color: var(--green);
+  background: var(--green-light);
+  color: var(--green);
+}
+
+/* ── Amount input override (larger) ── */
+.fund-amount-input {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+}
+
+/* ── Form error ── */
+.form-error {
+  background: var(--red-light);
+  border: 1px solid #f5a5a5;
+  border-radius: var(--r-md);
+  padding: 9px 14px;
+  color: var(--red);
+  font-size: 13px;
+  margin-bottom: 14px;
+}

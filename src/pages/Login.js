@@ -54,7 +54,7 @@ export default function Login() {
     <div className="login-page">
       <div className="login-grid" />
 
-      <div className="login-box">
+      <div className="login-box"><a href="/" className="login-back">← Back to GoTicket</a>
         <div className="login-logo">
           <div className="login-logo-icon">GT</div>
           <div>

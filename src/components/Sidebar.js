@@ -119,10 +119,10 @@ function getBottomNavItems(nav) {
 }
 
 export default function Sidebar() {
-  const location    = useLocation();
-  const role        = getRole();
-  const isAdmin     = role === "BRANCH_ADMIN";
-  const NAV         = isAdmin ? NAV_BRANCH_ADMIN : NAV_STAFF;
+  const location = useLocation();
+  const role     = getRole();
+  const isAdmin  = role === "BRANCH_ADMIN";
+  const NAV      = isAdmin ? NAV_BRANCH_ADMIN : NAV_STAFF;
   const bottomItems = getBottomNavItems(NAV);
 
   const [expanded, setExpanded] = useState(false);
@@ -138,7 +138,6 @@ export default function Sidebar() {
       {/* ── Desktop sidebar ────────────────────────────────────── */}
       <aside className={`sidebar ${expanded ? "sidebar--expanded" : "sidebar--collapsed"}`}>
 
-        {/* Toggle */}
         <button
           className="sidebar-toggle"
           onClick={() => setExpanded(prev => !prev)}
@@ -152,7 +151,6 @@ export default function Sidebar() {
           </svg>
         </button>
 
-        {/* Logo */}
         <div className="sidebar-logo">
           <div className="sidebar-logo-icon">GT</div>
           {expanded && (
@@ -167,12 +165,11 @@ export default function Sidebar() {
           )}
         </div>
 
-        {/* Nav */}
         <nav className="sidebar-menu">
-          {NAV.map((section) => (
+          {NAV.map(section => (
             <React.Fragment key={section.label}>
               {expanded && <div className="sidebar-section">{section.label}</div>}
-              {section.items.map((item) => (
+              {section.items.map(item => (
                 <Link
                   key={item.name}
                   to={item.path}
@@ -188,9 +185,12 @@ export default function Sidebar() {
           ))}
         </nav>
 
-        {/* Logout */}
         <div className="sidebar-footer">
-          <button className="sidebar-logout" onClick={handleLogout} title={!expanded ? "Logout" : undefined}>
+          <button
+            className="sidebar-logout"
+            onClick={handleLogout}
+            title={!expanded ? "Logout" : undefined}
+          >
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" width="16" height="16">
               <path d="M6 2H3a1 1 0 00-1 1v10a1 1 0 001 1h3M10 11l3-3-3-3M13 8H6"/>
             </svg>
@@ -202,7 +202,7 @@ export default function Sidebar() {
       {/* ── Mobile bottom nav ──────────────────────────────────── */}
       <nav className="mobile-bottom-nav">
         <div className="mobile-bottom-nav-inner">
-          {bottomItems.map((item) => (
+          {bottomItems.map(item => (
             <Link
               key={item.name}
               to={item.path}
